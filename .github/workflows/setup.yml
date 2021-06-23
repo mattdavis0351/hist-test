@@ -8,9 +8,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: view initial config
-        run: |
-          git config --get user.name
-          git config --get user.email
+        run: git config --get user.name
 
       - name: cofigure git
         uses: ./.github/actions/local-1
