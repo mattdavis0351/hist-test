@@ -1,0 +1,10 @@
+name: local 1
+description: a local action to create commits
+inputs:
+  token:
+    description: api token
+    required: true
+
+runs:
+  using: node12
+  main: "dist/index.js"

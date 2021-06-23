@@ -1,0 +1,11 @@
+on: workflow_dispatch
+
+jobs:
+  setup-repo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v2
+
+      - name: cofigure git
+        uses: ./.github/actions/local-1
