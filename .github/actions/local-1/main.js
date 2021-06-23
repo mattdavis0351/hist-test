@@ -50,7 +50,7 @@ async function configureGit(actor) {
 
 async function addFile(filename, contents) {
   console.log(`writing file: ${filename}`);
-  fs.writeFileSync(filename, contents, "utf8");
+  await fs.writeFile(filename, contents, "utf8");
 
   const gitAdd = spawn("git", ["add", filename]);
   gitAdd.stdout.on("data", (data) => console.log(`adding file: ${data}`));
