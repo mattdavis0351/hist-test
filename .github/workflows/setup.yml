@@ -7,8 +7,8 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v2
 
-      - name: view initial config
-        run: git config --get user.name
+      # - name: view initial config
+      #   run: git config --get user.name
 
       - name: cofigure git
         uses: ./.github/actions/local-1
