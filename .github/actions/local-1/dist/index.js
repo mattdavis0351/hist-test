@@ -4228,7 +4228,7 @@ const { spawn } = __webpack_require__(129);
 const fs = __webpack_require__(760);
 const workspace = process.env.GITHUB_WORKSPACE;
 
-function addCommit(commitMsg) {
+async function addCommit(commitMsg) {
   const gitCommit = spawn("git", ["commit", "-m", commitMsg]);
 
   gitCommit.stdout.on("data", (data) => console.log(`adding commit: ${data}`));
@@ -4241,7 +4241,7 @@ function addCommit(commitMsg) {
   });
 }
 
-function configureGit(actor) {
+async function configureGit(actor) {
   const gitConfigEmail = spawn("git", [
     "config",
     "--local",
@@ -4273,10 +4273,12 @@ function configureGit(actor) {
   });
 }
 
-function addFile(filename, contents) {
+async function addFile(filename, contents) {
+  console.log(`writing file: ${filename}`);
   fs.writeFileSync(filename, contents, "utf8");
+
   const gitAdd = spawn("git", ["add", filename]);
-  gitAdd.stdout.on("data", (data) => console.log(`adding user name: ${data}`));
+  gitAdd.stdout.on("data", (data) => console.log(`adding file: ${data}`));
   gitAdd.stderr.on("data", (data) => console.log(`Error: ${data}`));
   gitAdd.on("close", (code) => {
     if (code !== 0) {
@@ -4290,12 +4292,12 @@ function gitPush() {}
 
 async function run() {
   try {
-    configureGit(github.context.actor);
-    addFile(
+    await configureGit(github.context.actor);
+    await addFile(
       `${workspace}/file1.txt`,
       "Adding some content to a file to create a commit"
     );
-    addCommit("committing file 1.txt");
+    await addCommit("committing file 1.txt");
   } catch (error) {
     console.log(error);
   }
