@@ -4288,16 +4288,27 @@ async function addFile(filename, contents) {
   });
 }
 
+async function createCommit(filename, contents, msg) {
+  await addFile(`${workspace}/${filename}`, contents);
+  await addCommit(msg);
+}
+
 function gitPush() {}
 
 async function run() {
   try {
     await configureGit(github.context.actor);
-    await addFile(
-      `${workspace}/file1.txt`,
-      "Adding some content to a file to create a commit"
+    await createCommit(
+      "file13.txt",
+      "some file contents to fill with",
+      "adding file13.txt"
     );
-    await addCommit("committing file 1.txt");
+
+    await createCommit(
+      "file1000000.txt",
+      "oranges and bananas",
+      "adding file10000000.txt"
+    );
   } catch (error) {
     console.log(error);
   }
