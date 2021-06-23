@@ -4234,7 +4234,7 @@ async function addCommit(commitMsg) {
   if (gitCommit.status !== 0) {
     console.log(`process exited with code: ${gitCommit.status}`);
   }
-  console.log(gitCommit.stdout);
+  console.log(gitCommit.stdout.toString());
 }
 
 async function configureGit(actor) {
