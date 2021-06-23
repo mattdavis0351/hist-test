@@ -7,5 +7,15 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v2
 
+      - name: view initial config
+        run: |
+          git config --get user.name
+          git config --get user.email
+
       - name: cofigure git
         uses: ./.github/actions/local-1
+
+      - name: view post config
+        run: |
+          git config --get user.name
+          git config --get user.email
