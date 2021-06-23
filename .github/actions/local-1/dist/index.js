@@ -4234,6 +4234,7 @@ async function addCommit(commitMsg) {
   if (gitCommit.status !== 0) {
     console.log(`process exited with code: ${gitCommit.status}`);
   }
+  console.log(gitCommit.stdout);
 }
 
 async function configureGit(actor) {
@@ -4253,7 +4254,7 @@ async function configureGit(actor) {
 
 async function addFile(filename, contents) {
   console.log(`writing file: ${filename}`);
-  await fs.writeFileSync(filename, contents, "utf8");
+  fs.writeFileSync(filename, contents, "utf8");
 
   const gitAdd = spawnSync("git", ["add", filename]);
 
