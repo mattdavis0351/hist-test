@@ -4274,7 +4274,7 @@ async function createCommit(filename, commitMsg) {
 function gitPush() {
   const push = spawnSync("git", ["push", "origin", "master", "--force"]);
   if (push.status !== 0) {
-    console.log(push);
+    console.log(push.stderr.toString());
   }
 }
 
@@ -4290,7 +4290,7 @@ async function run() {
     );
     await createCommit("style.css", "Add style.css");
     await createCommit("main.js", "Need to connect to HTML later");
-    await gitPush();
+    gitPush();
   } catch (error) {
     console.log(error);
   }
