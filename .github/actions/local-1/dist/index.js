@@ -4273,6 +4273,9 @@ async function createCommit(filename, commitMsg) {
 
 function gitPush() {
   const push = spawnSync("git", ["push", "origin", "master", "--force"]);
+  if (push.status !== 0) {
+    console.log(push);
+  }
 }
 
 async function run() {
