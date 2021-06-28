@@ -77,12 +77,14 @@ async function run() {
 
     const octokit = github.getOctokit(token);
 
-    const pubKey = octokit.rest.actions.getRepoPublicKey({ ...github.context });
+    const pubKey = await octokit.rest.actions.getRepoPublicKey({
+      ...github.context,
+    });
     // {
     //   "key_id": "012345678912345678",
     //   "key": "2Sg8iYjAxxmI2LvUXpJjkYrMxURPc8r+dB7TJyvv1234"
     // }
-
+    console.log(pubKey);
     const key = pubKey.key;
     const key_id = pubKey.key_id;
 
