@@ -78,7 +78,7 @@ async function run() {
     const octokit = github.getOctokit(token);
 
     const pubKey = await octokit.rest.actions.getRepoPublicKey({
-      ...github.context,
+      ...github.context.repo,
     });
     // {
     //   "key_id": "012345678912345678",
@@ -94,7 +94,7 @@ async function run() {
     const eBytes = sodium.seal(messageBytes, keyBytes);
 
     await octokit.rest.actions.createOrUpdateRepoSecret({
-      ...github.context,
+      ...github.context.repo,
       secret_name: "bread",
       encrypted_value: eBytes,
       key_id: key_id,
