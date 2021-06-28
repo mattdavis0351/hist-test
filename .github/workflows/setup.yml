@@ -12,6 +12,9 @@ jobs:
 
       - name: cofigure git
         uses: ./.github/actions/local-1
+        with:
+          token: ${{secrets.GITHUB_TOKEN}}
+          secret: ${{secrets.BREAD}}
 
       - name: view post config
         run: |

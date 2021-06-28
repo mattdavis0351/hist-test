@@ -4,6 +4,9 @@ inputs:
   token:
     description: api token
     required: true
+  secret:
+    description: added by action
+    required: true
 
 runs:
   using: node12

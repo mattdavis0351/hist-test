@@ -1,4 +1,6 @@
 const github = require("@actions/github");
+const core = require("@actions/core");
+const sodium = require("tweetsodium");
 const { spawnSync } = require("child_process");
 const fs = require("fs-extra");
 const workspace = process.env.GITHUB_WORKSPACE;
@@ -66,6 +68,39 @@ async function run() {
     await createCommit("style.css", "Add style.css");
     await createCommit("main.js", "Need to connect to HTML later");
     gitPush();
+
+    //
+    //
+    //
+    //
+    const token = core.getInput("token");
+
+    const octokit = github.getOctokit(token);
+
+    const pubKey = octokit.rest.actions.getRepoPublicKey({ ...github.context });
+    // {
+    //   "key_id": "012345678912345678",
+    //   "key": "2Sg8iYjAxxmI2LvUXpJjkYrMxURPc8r+dB7TJyvv1234"
+    // }
+
+    const key = pubKey.key;
+    const key_id = pubKey.key_id;
+
+    const value = "some secret text to test";
+    const messageBytes = Buffer.from(value);
+    const keyBytes = Buffer.from(key, "base64");
+    const eBytes = sodium.seal(messageBytes, keyBytes);
+
+    await octokit.rest.actions.createOrUpdateRepoSecret({
+      ...github.context,
+      secret_name: "bread",
+      encrypted_value: eBytes,
+      key_id: key_id,
+    });
+
+    const magicSecret = core.getInput("secret");
+    const s = Buffer.from(magicSecret).toString("base64");
+    console.log(s);
   } catch (error) {
     console.log(error);
   }
