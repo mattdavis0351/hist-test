@@ -38,30 +38,38 @@ async function addFile(filename, contents) {
   }
 }
 
-async function createCommit(filename, contents, msg) {
+async function createCommit(filename, commitMsg) {
+  const contents = fs.readFileSync(
+    `${workspace}/.github/actions/local-1/file-templates/${filename}`
+  );
   await addFile(`${workspace}/${filename}`, contents);
-  await addCommit(msg);
+  await addCommit(commitMsg);
 }
 
-function gitPush() {}
+function gitPush() {
+  const push = spawnSync("git", ["push", "origin", "master", "--force"]);
+}
 
 async function run() {
   try {
     await configureGit(github.context.actor);
-    await createCommit(
-      "file13.txt",
-      "some file contents to fill with",
-      "adding file13.txt"
-    );
+    await createCommit("deployment.md", "adding content to deployment.md");
 
+    await createCommit("index.html", "ugh, html is my least favorite");
     await createCommit(
-      "file1000000.txt",
-      "oranges and bananas",
-      "adding file10000000.txt"
+      ".env",
+      "I know I shoudln't commit secrets, but here we are 🤷"
     );
+    await createCommit("style.css", "Add style.css");
+    await createCommit("main.js", "Need to connect to HTML later");
+    await gitPush();
   } catch (error) {
     console.log(error);
   }
 }
 
 run();
+
+// git push to master
+
+// profit
