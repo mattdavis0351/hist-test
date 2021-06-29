@@ -722,7 +722,8 @@ module.exports = async () => {
     const res = await octokit.rest.repos.listCommits({
       ...github.context.repo,
     });
-    return res.data;
+    return JSON.stringify(res.data);
+    // return res.data;
     // count number of commits (should be 6)
     // if 1 less commit then check for messages
     // if more than one then is missing then throw invalid even if the proper commit is missing
