@@ -25,7 +25,7 @@ module.exports = async () => {
         return r.data.sha;
       }
     });
-    let shas;
+    let shas = [];
     Promise.all(notRemoved).then((v) => shas.push(v));
     return shas;
     // if (commitMessages.includes(removedCommitMessage)) {
