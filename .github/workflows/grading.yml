@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Grade gitignore activity
         id: events
-        uses: ./.github/actions/check-history-action
+        uses: ./.github/actions/commit-check
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
