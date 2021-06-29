@@ -744,7 +744,7 @@ module.exports = async () => {
 
     const tree = await octokit.rest.git.getTree({
       ...github.context.repo,
-      tree_sha: "f2cac989c0781dd72fa825df9e76503cab323ae6",
+      tree_sha: "3d1a5d7d0b809e6fa792e8298fe2f3a0b492b737",
       recursive: 1,
     });
 
