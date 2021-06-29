@@ -22,7 +22,7 @@ module.exports = async () => {
       });
 
       if (r.data.tree.some((t) => t.path === ".env")) {
-        return t.sha;
+        return r.data.tree.sha;
       }
     });
 
