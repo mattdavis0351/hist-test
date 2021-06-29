@@ -749,8 +749,9 @@ module.exports = async () => {
         recursive: 1,
       });
 
-      if (tree.data.tree.some((t) => t.path === ".env"))
-        badSHAs.push(tree.data.sha);
+      if (tree.data.tree.some((t) => t.path === ".env")) {
+        badSHAs.push(sha);
+      }
     });
 
     return badSHAs;
