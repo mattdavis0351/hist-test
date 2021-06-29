@@ -724,6 +724,7 @@ module.exports = async () => {
       ...github.context.repo,
     });
     const commitSHAs = res.data.map((c) => c.sha);
+    console.log(commitSHAs);
 
     const notRemoved = await Promise.all(
       commitSHAs.map(async (s) => {
