@@ -1,6 +1,5 @@
 name: Grading workflow
 on:
-  # First trigger is totally unknown
   workflow_dispatch:
 
 jobs:
@@ -12,16 +11,11 @@ jobs:
       - name: Grade gitignore activity
         id: events
         uses: ./.github/actions/check-history-action
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Grading results
         uses: githubtraining/looking-glass-action@v0.2.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           feedback: ${{ steps.events.outputs.reports }}
-
-  troubleshoot-activity:
-    if: github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-latest
-    steps:
-      - name: troubleshooting steps
-        run: echo "If you're stuck, this documentation may be helpful; https://git-scm.com/docs/gitignore"
