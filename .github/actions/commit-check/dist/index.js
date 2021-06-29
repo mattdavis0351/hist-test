@@ -732,12 +732,12 @@ module.exports = async () => {
       });
 
       if (r.data.tree.some((t) => t.path === ".env")) {
-        const sha = await r.data.tree.sha;
-        return sha;
+        return r.data.sha;
       }
     });
-
-    return notRemoved;
+    let shas;
+    Promise.all(notRemoved).then((v) => shas.push(v));
+    return shas;
     // if (commitMessages.includes(removedCommitMessage)) {
     //   return "commit has not been removed";
     // } else {
