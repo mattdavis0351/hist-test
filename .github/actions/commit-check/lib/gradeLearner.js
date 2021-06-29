@@ -31,14 +31,20 @@ module.exports = async () => {
     //   })
     // );
     // return notRemoved;
+    const badSHAs = [];
+    commitSHAs.forEach(async (sha) => {
+      const tree = await octokit.rest.git.getTree({
+        ...github.context.repo,
+        tree_sha: sha,
+        recursive: 1,
+      });
 
-    const tree = await octokit.rest.git.getTree({
-      ...github.context.repo,
-      tree_sha: "3d1a5d7d0b809e6fa792e8298fe2f3a0b492b737",
-      recursive: 1,
+      if (tree.data.tree.some((t) => t.path === ".env")) badSHAs.push(sha);
     });
 
-    tree.data.tree.forEach((v) => console.log(v));
+    return badSHAs;
+
+    // tree.data.tree.forEach((v) => console.log(v));
     // if (commitMessages.includes(removedCommitMessage)) {
     //   return "commit has not been removed";
     // } else {
