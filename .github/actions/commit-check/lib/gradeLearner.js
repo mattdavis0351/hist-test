@@ -37,7 +37,7 @@ module.exports = async () => {
       tree_sha: commitSHAs[0],
     });
 
-    console.log(tree);
+    console.log(tree.tree);
     // if (commitMessages.includes(removedCommitMessage)) {
     //   return "commit has not been removed";
     // } else {
