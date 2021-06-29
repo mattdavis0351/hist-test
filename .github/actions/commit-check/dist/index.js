@@ -725,16 +725,18 @@ module.exports = async () => {
     });
     const commitSHAs = res.data.map((c) => c.sha);
 
-    const notRemoved = commitSHAs.map(async (s) => {
-      const r = await octokit.rest.git.getTree({
-        ...github.context.repo,
-        tree_sha: s,
-      });
+    const notRemoved = await Promise.all(
+      commitSHAs.map(async (s) => {
+        const r = await octokit.rest.git.getTree({
+          ...github.context.repo,
+          tree_sha: s,
+        });
 
-      if (r.data.tree.some((t) => t.path === ".env")) {
-        return s;
-      }
-    });
+        if (r.data.tree.some((t) => t.path === ".env")) {
+          return r.data.sha;
+        }
+      })
+    );
     return notRemoved;
     // if (commitMessages.includes(removedCommitMessage)) {
     //   return "commit has not been removed";
