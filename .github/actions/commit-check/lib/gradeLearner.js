@@ -3,7 +3,8 @@ const core = require("@actions/core");
 
 module.exports = async () => {
   const expectedNumberOfCommits = 6;
-  //   const commitMessages = res.data.map((c) => c.commit.message);
+  const removedCommitMessage =
+    "I know I shouldn't commit secrets, but here we are 🤷";
   const token = core.getInput("token");
   const octokit = github.getOctokit(token);
 
@@ -14,8 +15,12 @@ module.exports = async () => {
     });
 
     const commitMessages = res.data.map((c) => c.commit.message);
-    return console.log(commitMessages);
-    // return res.data;
+    if (commitMessages.includes(removedCommitMessage)) {
+      return "commit has not been removed";
+    } else {
+      return "commit is not present";
+    }
+
     // count number of commits (should be 6)
     // if 1 less commit then check for messages
     // if more than one then is missing then throw invalid even if the proper commit is missing
