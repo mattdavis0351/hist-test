@@ -14,12 +14,25 @@ module.exports = async () => {
       ...github.context.repo,
     });
     const commitSHAs = res.data.map((c) => c.sha);
+
+    const notRemoved = commitSHAs.map(async (s) => {
+      const r = await octokit.rest.git.getTree({
+        ...github.context.repo,
+        tree_sha: s,
+      });
+
+      if (r.data.tree.some((t) => t.path === ".env")) {
+        return t.sha;
+      }
+    });
+
+    return notRemoved;
     // if (commitMessages.includes(removedCommitMessage)) {
     //   return "commit has not been removed";
     // } else {
     //   return "commit is not present";
     // }
-    return commitSHAs;
+    // return commitSHAs;
 
     // count number of commits (should be 6)
     // if 1 less commit then check for messages
