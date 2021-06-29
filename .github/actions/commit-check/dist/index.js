@@ -736,7 +736,7 @@ module.exports = async () => {
       }
     });
 
-    return notRemoved;
+    return JSON.stringify(notRemoved);
     // if (commitMessages.includes(removedCommitMessage)) {
     //   return "commit has not been removed";
     // } else {
