@@ -22,10 +22,10 @@ module.exports = async () => {
       });
 
       if (r.data.tree.some((t) => t.path === ".env")) {
-        console.log(s);
+        return s;
       }
     });
-
+    return notRemoved;
     // if (commitMessages.includes(removedCommitMessage)) {
     //   return "commit has not been removed";
     // } else {
