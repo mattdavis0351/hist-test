@@ -742,17 +742,15 @@ module.exports = async () => {
     // );
     // return notRemoved;
     const badSHAs = [];
-    commitSHAs.forEach(async (sha) => {
+    for (const sha of commitSHAs) {
       const tree = await octokit.rest.git.getTree({
         ...github.context.repo,
         tree_sha: sha,
         recursive: 1,
       });
 
-      if (tree.data.tree.some((t) => t.path === ".env")) {
-        badSHAs.push(sha);
-      }
-    });
+      if (tree.data.tree.some((t) => t.path === ".env")) badSHAs.push(sha);
+    }
 
     return badSHAs;
 
