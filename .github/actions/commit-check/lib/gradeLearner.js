@@ -2,9 +2,9 @@ const github = require("@actions/github");
 const core = require("@actions/core");
 
 module.exports = async () => {
-  const expectedNumberOfCommits = 6;
-  const removedCommitMessage =
-    "I know I shoudln't commit secrets, but here we are 🤷";
+  // const expectedNumberOfCommits = 6;
+  // const removedCommitMessage =
+  //   "I know I shoudln't commit secrets, but here we are 🤷";
   const token = core.getInput("token");
   const octokit = github.getOctokit(token);
 
@@ -13,13 +13,13 @@ module.exports = async () => {
     const res = await octokit.rest.repos.listCommits({
       ...github.context.repo,
     });
-
-    const commitMessages = res.data.map((c) => c.commit.message);
-    if (commitMessages.includes(removedCommitMessage)) {
-      return "commit has not been removed";
-    } else {
-      return "commit is not present";
-    }
+    const commitSHAs = res.data.map((c) => c.sha);
+    // if (commitMessages.includes(removedCommitMessage)) {
+    //   return "commit has not been removed";
+    // } else {
+    //   return "commit is not present";
+    // }
+    return commitSHAs;
 
     // count number of commits (should be 6)
     // if 1 less commit then check for messages
