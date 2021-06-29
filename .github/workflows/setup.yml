@@ -1,7 +1,8 @@
-on: workflow_dispatch
+on: push
 
 jobs:
   setup-repo:
+    if: github.event.commits[0].message == 'Initial commit'
     runs-on: ubuntu-latest
     steps:
       - name: checkout repo
@@ -11,14 +12,4 @@ jobs:
       #   run: git config --get user.name
 
       - name: cofigure git
-        uses: ./.github/actions/local-1
-        with:
-          token: ${{secrets.GITHUB_TOKEN}}
-          secret: ${{secrets.BREAD}}
-
-      - name: view post config
-        run: |
-          git config --get user.name
-          git config --get user.email
-          git status 
-          ls -la
+        uses: githubtraining/stage-commits-action@main
